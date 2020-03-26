@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+# this file is released under public domain and you can use without limitations
+
+# ----------------------------------------------------------------------------------------------------------------------
+# this is the main application menu add/remove items as required
+# ----------------------------------------------------------------------------------------------------------------------
+
+response.menu = [
+    (T('Home'), False, URL('default', 'index'), [])
+]
+
+response.Juegos = [
+    ("Juego sobre mario bros, tienes que esquivar la mayor cantidad de balas, si te toca una estas muerto.", False, URL('default', 'saltarin'), [], "Saltarin!"),
+
+    ("Con cuidado y no toques una flor, resuelve el tablero sin tocar una flor y en el menor tiempo posible.", False, URL('default', 'buscaflores'), [], "Busca Flores"),
+
+    ("El juego de corre o te coge el coronavirus es una version mejorada de clasico juego sin conexion de Chrome  de tRex, difrutalo!!", False, URL('default', 'covid'), [], "Covid-19 Runner"),
+
+    ("Lanza #### sobre las palomas, antes que te caiga una a ti.", False, URL('default', 'paloma'), [], "Paloma!"),
+
+    ("Llegaras al 2048?", False, URL('default', 'm2048'), [], "2048"),
+
+    ("Recoge la mayor cantidad de calaveras, se van a escapar de ti?", False, URL('default', 'cazacalaveras'), [], "Caza calaveras")
+]
