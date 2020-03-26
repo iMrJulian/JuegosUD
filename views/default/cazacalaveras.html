@@ -1,0 +1,29 @@
+{{extend 'default/index.html'}}
+
+{{block head}}
+	<title>Caza Craneos</title>
+<link rel="stylesheet" href="{{=URL('static','css/style.css')}}"/>
+	<link rel="stylesheet" type="text/css" href="{{=URL('static','cazacalaveras/css/estilo.css')}}" media="screen">
+
+{{end}}
+
+
+{{block body}}
+<body>
+<script>
+    var fondo = "{{=URL('static','cazacalaveras/imagenes/fondo.jpg')}}";
+
+    var lapida = "{{=URL('static','cazacalaveras/imagenes/lapida.png')}}";
+
+	var arrH = "{{=URL('static','cazacalaveras/imagenes/arribaHeroe.png')}}";
+	var arrEsq= "{{=URL('static','cazacalaveras/imagenes/arribaEsqueleto.png')}}";
+	var abaH = "{{=URL('static','cazacalaveras/imagenes/abajoHeroe.png')}}";
+	var abaEsq= "{{=URL('static','cazacalaveras/imagenes/abajoEsqueleto.png')}}";
+	var izqH = "{{=URL('static','cazacalaveras/imagenes/izquierdaHeroe.png')}}";
+	var izqEsq = "{{=URL('static','cazacalaveras/imagenes/izquierdaEsqueleto.png')}}";
+	var derH = "{{=URL('static','cazacalaveras/imagenes/derechaHeroe.png')}}";
+	var derEsq = "{{=URL('static','cazacalaveras/imagenes/derechaEsqueleto.png')}}";
+    </script>
+	<script src="{{=URL('static','cazacalaveras/js/juego.js')}}"></script>
+</body>
+{{end}}

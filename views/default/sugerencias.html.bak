@@ -1,0 +1,31 @@
+{{extend 'default/index.html'}}
+ {{block body}}
+<body>
+	<!-- Contact page -->
+	<section class="contact-page">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-7 order-2 order-lg-1">
+					<form class="contact-form">
+						<input id="inputNombre" type="text" placeholder="Nombre">
+						<input id="inputEmail" type="text" placeholder="E-MAIL">
+						<textarea id="inputSugerencia" placeholder="Sugerencia"></textarea>
+						<button class="site-btn" id="btnSubmit">Enviar <img src="{{=URL('static','images/double-arrow.png')}}"/></button>
+					</form>
+				</div>
+				<div class="col-lg-5 order-1 order-lg-2 contact-text text-white">
+					<h3>Hola!</h3>
+					<p>Lo que mas nos interesa es entretener y para ello dar la mejor calidad, asi que si tienes alguna sugerencia
+					o viste algun problema con la pagina o nuestro servicio puedes enviarnos una sugerencia o contactarnos al siguiente correo.
+					</p>
+					<div class="cont-info">
+						<div class="ci-text">juliandrincon@gmail.com</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Contact page end-->
+
+	<script src="{{=URL('static','js/suggest.js')}}"></script>
+</body>

@@ -1,0 +1,206 @@
+{{extend 'default/index.html'}}
+
+{{block head}}
+    <title>Saltarin</title>
+<link rel="stylesheet" href="{{=URL('static','css/style.css')}}"/>
+   <link rel="stylesheet" href="{{=URL('static','saltarin/css/estilo_j1/estilo.css')}}">
+    <script src="{{=URL('static','saltarin/js/js_j1/phaser.js')}}"></script>
+    <script>
+        var juego = new Phaser.Game(1070, 575, Phaser.CANVAS, 'bloque_juego');
+
+        var boton;
+        var Inicio = {
+            preload: function(){
+                juego.stage.backgroundColor = '#FFFFFF';
+                juego.load.image('boton',"{{=URL('static','saltarin/img/img_j1/boton.png')}}");
+            },
+
+            create: function(){
+
+
+                boton = this.add.button(juego.width/2,juego.height/2, 'boton',this.iniciarJuego, this);
+                boton.anchor.setTo(0.5);
+                boton.scale.setTo(0.5);
+
+                var txtIniciar = juego.add.text(juego.width/2, juego.height/2 -60, "Iniciar Juego",
+                                                {font: "bold 24px sans-serif", fill:"black", aling:"center"});
+                                                txtIniciar.anchor.setTo(0.5);
+                var txtTitulo = juego.add.text(juego.width/2, juego.height/2 -100, "EL GRAN SALTARIN",
+                                                {font: "bold 30px sans-serif", fill:"black", aling:"center"});
+                                                txtTitulo.anchor.setTo(0.5);
+            },
+
+            iniciarJuego: function(){
+
+                this.state.start('Juego');
+            }
+        };
+
+
+        var fondoJ;
+        var person;
+        var obs;
+        var salto;
+        var timer;
+        var puntos;
+        var txtPuntos;
+        var txtInicio;
+        var pausa;
+
+        var Juego = {
+
+            preload: function(){
+                juego.load.image('fondo', "{{=URL('static','saltarin/img/img_j1/giphy.jpg')}}");
+                juego.load.image('personaje', "{{=URL('static','saltarin/img/img_j1/personaje1.png')}}");
+                juego.load.image('obstaculo', "{{=URL('static','saltarin/img/img_j1/obstaculo.png')}}");
+
+                juego.forceSingleUpdate = true;
+            },
+
+            create: function(){
+
+                fondoJ = juego.add.tileSprite(0, 0, 1070, 575, 'fondo');
+                person = juego.add.sprite(50 , juego.height/2, 'personaje');
+                    person.scale.setTo(0.25);
+                juego.physics.startSystem(Phaser.Physics.ARCADE);
+                    juego.physics.arcade.enable(person);
+                    person.body.collideWorldBounds = true;
+                    person.body.gravity.y = 2000;
+                    obs = juego.add.group();
+                    obs.enableBody = true;
+                    obs.createMultiple(100, 'obstaculo');
+                salto = juego.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+                    salto.onDown.add(this.saltar, this);
+
+                pausa = juego.input.keyboard.addKey(Phaser.Keyboard.ESC);
+                    pausa.onDown.add(this.pausar, this);
+
+                timer = juego.time.events.loop(1200, this.crearObstaculos, this);
+
+                puntos = 0;
+                txtPuntos =juego.add.text(20, 20, "0", {font: "30px Arial", fill: "#FFF"});
+                txtInicio =juego.add.text(juego.width / 2, juego.height / 2, "Presione espacio para empezar", {font: "30px Arial", fill: "#FFF"});
+                juego.paused = true;
+            },
+
+            update: function(){
+                fondoJ.tilePosition.x -= 1;
+                juego.physics.arcade.overlap(person, obs, this.tocoObstaculo, null, this);
+                if(person.body.y == 0 || person.body.y == 513){
+                    if(person.alive == false)
+                        return;
+                    person.alive = false;
+                    juego.time.events.remove(timer);
+
+                    obs.forEachAlive(function(o){
+                        o.body.velocity.x = 0;
+                    }, this);
+                    this.state.start('Fin');
+                }
+            },
+
+            saltar: function(){
+                person.body.velocity.y = -500;
+                if (juego.paused && txtInicio.text == "Presione espacio para empezar"){
+                    juego.paused = false;
+                    txtInicio.text = "";
+                }
+            },
+
+            pausar: function(){
+                if (juego.paused){
+                    juego.paused = false;
+                    txtInicio.text = "";
+                }else if (juego.paused == false){
+                    juego.paused = true;
+                    txtInicio.text = "Pausa";
+                }
+            },
+
+            crearObstaculos: function(){
+
+                for( var i = 0; i < 1; i++){
+                    var carril = i+Math.floor((Math.random()*6))
+                    if(carril == 0){
+                        this.crearUnObstaculo(1000, 30);
+                    }else if(carril == 1){
+                        this.crearUnObstaculo(1000, 118);
+                    }else if(carril == 2){
+                        this.crearUnObstaculo(1000, 206);
+                    }else if(carril == 3){
+                        this.crearUnObstaculo(1000, 294);
+                    }else if(carril == 4){
+                        this.crearUnObstaculo(1000, 382);
+                    }else if(carril == 5){
+                        this.crearUnObstaculo(1000, 470);
+                    }
+
+                }
+                puntos += 1;
+                txtPuntos.text = puntos;
+            },
+
+            crearUnObstaculo: function(x, y){
+                var obstaculo = obs.getFirstDead();
+
+                obstaculo.reset(x, y);
+                obstaculo.body.velocity.x = -180;
+                obstaculo.checkWorldBounds = true;
+                obstaculo.outOfBoundsKill = true;
+            },
+
+            tocoObstaculo: function(){
+                if(person.alive == false)
+                    return;
+                person.alive = false;
+                juego.time.events.remove(timer);
+
+                obs.forEachAlive(function(o){
+                    o.body.velocity.x = 0;
+                }, this);
+                this.state.start('Fin');
+            }
+        };
+
+
+        var Fin = {
+
+            preload: function(){
+                juego.stage.backgroundColor = '#FFFFFF';
+                juego.load.image('retry', "{{=URL('static','saltarin/img/img_j1/retry.jpg')}}");
+            },
+
+            create: function(){
+                boton = this.add.button(juego.width/2,juego.height/2, 'retry',this.iniciarJuego, this);
+                boton.anchor.setTo(0.5);
+                boton.scale.setTo(0.5);
+
+                var txtEtiqueta = juego.add.text(juego.width/2 -10, juego.height/2 -55, "Puntos:",
+                                                {font: "bold 24px sans-serif", fill:"black", aling:"center"});
+                                                txtEtiqueta.anchor.setTo(0.5);
+                var txtPuntosVal = juego.add.text(juego.width/2 +50, juego.height/2 -55, puntos.toString(),
+                                                {font: "bold 24px sans-serif", fill:"black", aling:"center"});
+                                                txtPuntosVal.anchor.setTo(0.5);
+                var txtTitulo = juego.add.text(juego.width/2, juego.height/2 -100, "GAME OVER",
+                                                {font: "bold 30px sans-serif", fill:"black", aling:"center"});
+                                                txtTitulo.anchor.setTo(0.5);
+            },
+
+            iniciarJuego: function(){
+                this.state.start('Juego');
+            }
+        }
+
+        juego.state.add('Inicio', Inicio);
+        juego.state.add('Juego', Juego);
+        juego.state.add('Fin', Fin);
+
+        juego.state.start('Inicio');
+    </script>
+{{end}}
+
+    {{block body}}
+<body>
+   <div id="bloque_juego"></div>
+</body>
+    {{end}}

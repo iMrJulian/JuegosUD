@@ -1,0 +1,23 @@
+{{extend 'default/index.html'}}
+{{block body}}
+<body>
+    <!-- Blog section -->
+  <section class="blog-section spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 col-lg-8 col-md-7">
+          <div class="section-title text-white">
+            <h2>Sugerencias</h2>
+          </div>
+          <!-- Blog item -->
+          <div id = "items">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Blog section end -->
+
+  <script src="{{=URL('static','js/rev.js')}}"></script>
+</body>
+{{end}}

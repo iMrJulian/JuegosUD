@@ -1,0 +1,69 @@
+{{extend 'default/index.html'}}
+
+{{block head}}
+<link rel="stylesheet" href="{{=URL('static','css/style.css')}}"/>
+        <meta charset="utf-8">
+        <title>2048</title>
+        <link href="{{=URL('static','m2048/css/estilo2048.css')}}" rel ="stylesheet" type ="text/css">
+        <script src="{{=URL('static','m2048/js/Modelo/Admin.js')}}"></script>
+        <script src="{{=URL('static','m2048/js/Modelo/Ficha.js')}}"></script>
+        <script src="{{=URL('static','m2048/js/Modelo/Plantilla.js')}}"></script>
+        <script src="{{=URL('static','m2048/js/Controlador/Teclado.js')}}"></script>
+        <script src="{{=URL('static','m2048/js/Vista/Manejo.js')}}"></script>
+        <script src="{{=URL('static','m2048/js/launcher.js')}}"></script>
+{{end}}
+{{block body}}
+    <body>
+        <div class="cuadro-general">
+            <div class="cabecera">
+                <p>
+                <strong>Instrucciones:</strong> Mueve las fichas con las flechas para unir los mismos números e intenta llegar a 2048. ¡Buena suerte!
+                </p>
+                <div class="cuadro-puntajes">
+                    <div class="puntaje-actual">0</div>
+                </div>
+            </div>
+        </div>
+        <div class="acerca-del-juego">
+            <a class="reiniciar">Juego nuevo</a>
+        </div>
+        <div class="cuadro-general">
+        <div class="cuadro-tablero">
+            <div class="mensaje-final">
+                <p></p>
+                <div class="cuadro-botones">
+                    <a class="boton-seguir-jugando">Seguir jugando</a>
+                    <a class="boton-reintentar">Reiniciar juego</a>
+                </div>
+            </div>
+            <div class="cuadro-cuadricula">
+            <div class="cuadro-filas">
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+            </div>
+            <div class="cuadro-filas">
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+            </div>
+            <div class="cuadro-filas">
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+            </div>
+            <div class="cuadro-filas">
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+                <div class="cuadro-celda"></div>
+            </div>
+        </div>
+             <div class="cuadro-ficha"></div>
+        </div>
+        </div>
+    </body>
+{{end}}
